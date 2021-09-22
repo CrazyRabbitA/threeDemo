@@ -1,6 +1,3 @@
-# threeDemo
-
-vue3+three.js  
 ![3d](http://img.souche.com/f2e/7e4146ab4e2aeed0e80db7e24e20eb85.jpg)
 
 应用three.js的经典场景： 
@@ -30,6 +27,7 @@ H5/微信小游戏：
 [郭隆邦技术博客](http://www.yanhuangxueyuan.com/)  
 [b站教学视频](https://search.bilibili.com/all?keyword=threejs&from_source=nav_search_new)    
 [canvas](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API)  
+[OpenGL](https://zh.wikipedia.org/wiki/OpenGL)  
 [demo原文链接](https://blog.csdn.net/oqqeric61495217/article/details/118601732?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-1.no_search_link&spm=1001.2101.3001.4242)  
 
 可视化制作网站：
