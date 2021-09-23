@@ -2,49 +2,58 @@
   <div class="finetriangle">
     <div class="sanjiao">
       <!-- 金字塔 -->
-      <div class="sj sj1"></div>
-      <div class="sj sj2"></div>
-      <div class="sj sj3"></div>
-      <div class="sj sj4"></div>
-      <div class="sj sj5"></div>
-      <!-- 右侧数据填入 -->
-      <div class="comarow descsj1">
-        <span class="line"></span>
-        <span class="value" id="hgwvalue">0</span>
-      </div>
-      <div class="comarow descsj2">
-        <span class="line"></span>
-        <span class="value" id="gwvalue">0</span>
-      </div>
-      <div class="comarow descsj3">
-        <span class="line"></span>
-        <span class="value" id="zgwvalue">0</span>
-      </div>
-      <div class="comarow descsj4">
-        <span class="line"></span>
-        <span class="value" id="zwvalue">0</span>
-      </div>
-      <div class="comarow descsj5">
-        <span class="line"></span>
-        <span class="value" id="dwvalue">0</span>
-      </div>
+      <div :class="['sj',`sj${item.id}`]" v-for="item in lists" :key="item.id" @click="change(item)"></div>
       <!-- 中间文字 -->
-      <div class="describe describe1"></div>
-      <div class="describe describe2">Three.js</div>
-      <div class="describe describe3">Canvas</div>
-      <div class="describe describe4">WebGL</div>
-      <div class="describe describe5">OpenGL</div>
+      <div :class="['describe',`describe${item.id}`]" v-for="item in lists" :key="item.id" @click="change(item)">
+        {{ item.title }}
+      </div>
+    </div>
+    <div class="desc">
+      <div class="descContent" v-if="currentDesc">{{ currentDesc }}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'pyramid'
+  name: 'introduce',
+  data() {
+    return {
+      currentDesc: '',
+      lists: [
+        {
+          id: 1,
+          title: 'Three.js',
+          desc: 'threejs的描述'
+        },
+        {
+          id: 2,
+          title: 'Canvas',
+          desc: 'canvas的描述'
+        },
+        {
+          id: 3,
+          title: 'WebGL',
+          desc: 'webgl'
+        },
+        {
+          id: 4,
+          title: 'OpenGL',
+          desc: 'opengl的描述'
+        }
+      ]
+    }
+  },
+  methods: {
+    change(item) {
+      this.currentDesc = item.desc;
+      console.log(item.desc);
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 body {
   width: 100%;
   height: 100%;
@@ -54,59 +63,74 @@ body {
   width: 100%;
   height: 100vh;
   background: #082449;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  .desc {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .descContent{
+      width: 400px;
+      height: 300px;
+      background: #b9b9b9;
+      text-align: left;
+      border-radius: 10px;
+      padding: 20px;
+      color: black;
+      font-size: 16px;
+    }
+  }
 }
 
 .finetriangle .sanjiao {
   width: 308px;
   margin: 0 auto;
   position: relative;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  top: 46%;
   padding-right: 30px;
+  margin-left: 100px;
 }
 
 .finetriangle .sj {
+  cursor: pointer;
   margin: 0 auto;
   height: 0;
   border-top: 0 solid transparent;
   border-right: 15px solid transparent;
   border-left: 15px solid transparent;
-  border-bottom-width: 30px;
+  border-bottom-width: 80px;
   border-bottom-style: solid;
   box-sizing: content-box;
   margin-bottom: 9px;
 }
 
 .finetriangle .sj1 {
-  width: 0;
+  width: 100px;
   border-bottom-color: #ff0086;
   box-shadow: 0 10px 0 0 #cc007e;
 }
 
 .finetriangle .sj2 {
-  width: 40px;
+  width: 200px;
   border-bottom-color: #ff3600;
   box-shadow: 0 10px 0 0 #ce1d00;
 }
 
 .finetriangle .sj3 {
-  width: 80px;
+  width: 300px;
   border-bottom-color: #ff7f00;
   box-shadow: 0 10px 0 0 #d16800;
 }
 
 .finetriangle .sj4 {
-  width: 120px;
+  width: 400px;
   border-bottom-color: #ffc94d;
   box-shadow: 0 10px 0 0 #e5912e;
+  margin-left: -49px;
 }
 
-.finetriangle .sj5 {
-  width: 160px;
-  border-bottom-color: #67ce67;
-  box-shadow: 0 10px 0 0 #499c49;
-}
 
 .finetriangle .comarow {
   font-size: 12px;
@@ -120,7 +144,7 @@ body {
 }
 
 .finetriangle .value {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .finetriangle .descsj1 {
@@ -179,26 +203,27 @@ body {
 }
 
 .finetriangle .describe {
+  cursor: pointer;
   position: absolute;
   margin-left: 135px;
-  font-size: 12px;
+  font-size: 16px;
   color: #ffffff;
 }
 
 .finetriangle .describe1 {
-  top: 10px;
+  top: 32px;
 }
 
 .finetriangle .describe2 {
-  top: 46px;
+  top: 125px;
 }
 
 .finetriangle .describe3 {
-  top: 86px;
+  top: 215px;
 }
 
 .finetriangle .describe4 {
-  top: 124px;
+  top: 305px;
 }
 
 .finetriangle .describe5 {
