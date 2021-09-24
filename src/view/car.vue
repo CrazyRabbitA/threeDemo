@@ -21,17 +21,17 @@
 <script setup>
 import {onMounted, reactive, ref, toRefs} from 'vue'
 import {
-  Color,
-  DirectionalLight,
-  DirectionalLightHelper,
-  HemisphereLight,
-  HemisphereLightHelper,
-  PerspectiveCamera,
-  Scene,
-  WebGLRenderer
+  Color, // 颜色构造器
+  DirectionalLight, // 平行光
+  DirectionalLightHelper, // 平行光 DirectionalLight 的辅助对象. 其中包含了表示光位置的平面和表示光方向的线段.
+  HemisphereLight, // 半球光 光源直接放置于场景之上，光照颜色从天空光线颜色颜色渐变到地面光线颜色。
+  HemisphereLightHelper, // 半球光辅助对象
+  PerspectiveCamera, // 透视相机
+  Scene, // 场景构造器
+  WebGLRenderer // 使用webGl渲染场景
 } from 'three'
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js' // 对场景进行控制 缩放 平移 旋转 等
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader' // 用于加载3D模型
 //车身颜色数组
 const colorAry = [
   "rgb(216, 27, 67)", "rgb(142, 36, 170)", "rgb(81, 45, 168)", "rgb(48, 63, 159)", "rgb(30, 136, 229)", "rgb(0, 137, 123)",
@@ -43,8 +43,8 @@ const defaultMap = {
   y: 128,
   z: 0,
 }// 相机的默认坐标
-const map = reactive(defaultMap)//把相机坐标设置成可观察对象
-const {x, y, z} = toRefs(map)//输出坐标给模板使用
+const map = reactive(defaultMap) // 把相机坐标设置成可观察对象
+const {x, y, z} = toRefs(map) // 输出坐标给模板使用
 let scene, camera, renderer, controls, floor, dhelper, hHelper, directionalLight, hemisphereLight // 定义所有three实例变量
 let isLoading = ref(true) //是否显示loading  这个load模型监听的进度
 let loadingWidth = ref(0)// loading的进度
@@ -177,24 +177,23 @@ body {
   right: 0;
   z-index: 1111111;
   color: #fff;
-}
 
-.maskLoading .loading {
-  width: 400px;
-  height: 20px;
-  border: 1px solid #fff;
-  background: #000;
-  overflow: hidden;
-  border-radius: 10px;
+  .loading {
+    width: 400px;
+    height: 20px;
+    border: 1px solid #fff;
+    background: #000;
+    overflow: hidden;
+    border-radius: 10px;
 
-}
-
-.maskLoading .loading div {
-  background: #fff;
-  height: 20px;
-  width: 0;
-  transition-duration: 500ms;
-  transition-timing-function: ease-in;
+    div {
+      background: #fff;
+      height: 20px;
+      width: 0;
+      transition-duration: 500ms;
+      transition-timing-function: ease-in;
+    }
+  }
 }
 
 canvas {
@@ -213,12 +212,11 @@ canvas {
   .routeIcon, .pauseIcon {
     width: 30px;
     height: 30px;
-    margin-right: 10px;
+    margin: 10px;
   }
 }
 
 .colorSelect {
-  border: solid 2px red;
   position: fixed;
   flex-direction: column;
   left: 0;

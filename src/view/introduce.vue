@@ -24,22 +24,22 @@ export default {
         {
           id: 1,
           title: 'Three.js',
-          desc: 'threejs的描述'
+          desc: '原生的WebGl接口涉及图形学，算法，计算机底层原理相关的知识，直接通过WebGl直接编写程序比较麻烦，学习成本比较高，three.js在它的基础上进行了进一步的封装和简化开发开发过程。'
         },
         {
           id: 2,
           title: 'Canvas',
-          desc: 'canvas的描述'
+          desc: 'Canvas是HTML5引入的新标签，用于做图形容器，Canvas Api主要聚焦于2D图形。'
         },
         {
           id: 3,
           title: 'WebGL',
-          desc: 'webgl'
+          desc: 'WebGL是一种JavaScript API，用于在不使用插件的情况下在任何兼容的网页浏览器中呈现交互式2D和3D图形，WebGL 实现了使用js调用封装过的OpenGL ES2.0标准接口实现3D功能。 WebGL 无论如何都需要一个显示对象来呈现，这个对象就是 Canvas，仅此而已，WebGL不对Canvas有任何附加的操作API， 那部分属于浏览器js支持的范畴。'
         },
         {
           id: 4,
           title: 'OpenGL',
-          desc: 'opengl的描述'
+          desc: 'Open Graphics Library,开放式图形库，描述了绘制2D和3D图形的抽象API,由近350个不同的函数调用组成，用来从简单的图形绘制复杂的三维景象。纯粹专注于渲染，与语言与平台无关：JavaScript绑定的WebGL（基于OpenGL ES 2.0在Web浏览器中的进行3D渲染的API）；C绑定的WGL、GLX和CGL；iOS提供的C绑定；Android提供的Java和C绑定。(OpenGl是和显卡有直接关系的底层的驱动级图形接口)'
         }
       ]
     }
@@ -81,6 +81,7 @@ body {
       padding: 20px;
       color: black;
       font-size: 16px;
+      line-height: 24px;
     }
   }
 }

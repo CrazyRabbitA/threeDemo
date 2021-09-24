@@ -24,6 +24,7 @@ H5/微信小游戏：
 
 [three.js中文官网](http://www.webgl3d.cn/)  
 [three.js github](https://github.com/mrdoob/three.js)  
+[three.js Api](http://www.webgl3d.cn/threejs/docs/#api/zh/animation/AnimationAction)    
 [郭隆邦技术博客](http://www.yanhuangxueyuan.com/)  
 [b站教学视频](https://search.bilibili.com/all?keyword=threejs&from_source=nav_search_new)    
 [canvas](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API)  

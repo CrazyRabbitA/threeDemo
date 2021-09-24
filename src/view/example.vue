@@ -69,6 +69,12 @@
       </a>
     </div>
   </div>
+  <div class="more">
+    <a href="https://www.webgl3d.cn/threejs/examples/#webgl_animation_keyframes" target="_blank">代码案例</a>
+  </div>
+  <div class="more">
+    <a href="https://threejs.org/examples/" target="_blank">More Case</a>
+  </div>
 </template>
 
 <script>
@@ -105,6 +111,13 @@ export default {
       }
     }
   }
+}
+
+.more {
+  color: red;
+  text-decoration: none;
+  margin: 40px;
+  font-size: 30px;
 }
 
 img {
