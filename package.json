@@ -7,9 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^0.2.4",
+    "axios": "^0.24.0",
     "element-plus": "^1.1.0-beta.12",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
+    "sass": "^1.47.0",
+    "sass-loader": "^12.4.0",
     "three": "^0.132.2",
     "vue": "^3.0.5",
     "vue-router": "^4.0.0-beta.13"

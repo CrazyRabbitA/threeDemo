@@ -1,19 +1,201 @@
 <template>
-  <div>
-    <img src="http://img.souche.com/f2e/7e4146ab4e2aeed0e80db7e24e20eb85.jpg" alt="">
+  <div class="home">
+    <div class="content">
+      <div :class="['logContent',{'middle-flip':!isFront}]">
+        <div class="front">
+          <div class="title">LOGIN</div>
+          <el-input class="input" clearable v-model="loginForm.account" placeholder="Please input account"/>
+          <el-input class="input" clearable type="password" show-password v-model="loginForm.password"
+                    placeholder="Please input password"/>
+          <el-button class="button" type="primary" round @click="load('login')">LOGIN</el-button>
+          <div class="tips">
+            <div class="row">If you don't have account.Please</div>
+            <div class="row">Click hera to <span class="signText" @click="rotate">Sign Up</span></div>
+          </div>
+        </div>
+
+        <div class="back">
+          <div class="title">REGISTER</div>
+          <el-input class="input" clearable v-model="registerForm.account" placeholder="Please input account"/>
+          <el-input class="input" clearable type="password" show-password v-model="registerForm.password"
+                    placeholder="Please input password"/>
+          <el-input class="input" clearable type="password" show-password v-model="registerForm.confirmPassword"
+                    placeholder="Please confirm password"/>
+          <el-button class="button" type="primary" round @click="load('register')">REGISTER</el-button>
+          <div class="tips">
+            <div class="row">Have an account? You can</div>
+            <div class="row">Click hera to <span class="signText" @click="rotate">Login</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import {ElMessage} from 'element-plus'
+import {getCurrentInstance} from "vue";
+
+
 export default {
-  data() {
-    return {}
+  setup() {
+    let {proxy} = getCurrentInstance();
   },
-  methods: {},
+  data() {
+    return {
+      isFront: true,
+      loginForm: {
+        account: '',
+        password: ''
+      },
+      registerForm: {
+        account: '',
+        password: '',
+        confirmPassword: ''
+      }
+    }
+  },
+  methods: {
+    rotate() {
+      console.log('旋转');
+      this.isFront = !this.isFront;
+      console.log(this.isFront);
+    },
+    load(type) {
+      this.$router.push('note');
+      // if (type === 'login') {
+      //   if (!this.loginForm.account) {
+      //     ElMessage({
+      //       message: 'Please input your account',
+      //       type: 'warning',
+      //     })
+      //     return false;
+      //   }
+      //   if (!this.loginForm.password) {
+      //     ElMessage({
+      //       message: 'Please input your password',
+      //       type: 'warning',
+      //     })
+      //     return false;
+      //   }
+      //
+      // } else {
+      //   if (!this.registerForm.account) {
+      //     ElMessage({
+      //       message: 'Please input your account',
+      //       type: 'warning',
+      //     })
+      //     return false;
+      //   }
+      //   if (!this.registerForm.password) {
+      //     ElMessage({
+      //       message: 'Please input your password',
+      //       type: 'warning',
+      //     })
+      //     return false;
+      //   }
+      //   if (!this.registerForm.confirmPassword) {
+      //     ElMessage({
+      //       message: 'Please input your password again',
+      //       type: 'warning',
+      //     })
+      //     return false;
+      //   }
+      //   if (this.registerForm.password !== this.registerForm.confirmPassword) {
+      //     ElMessage({
+      //       message: 'Please confirm your password,make sure they are in common',
+      //       type: 'warning',
+      //     })
+      //     return false;
+      //   }
+      //
+      // }
+
+    }
+  }
 }
 </script>
 <style lang="less" scoped>
-img {
-  width: 100%;
+.home {
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: url('http://img.souche.com/f2e/2da0f1c87fb5b3dcc3560c4244dec230.jpeg') no-repeat;
+    background-size: cover;
+
+    .logContent {
+      background: rgba(255, 255, 255, .2);
+      padding: 20px;
+      width: 350px;
+      height: 300px;
+      border-radius: 20px;
+
+      .front {
+        transform: rotateY(0deg);
+      }
+
+      .back {
+        transform: rotateY(-180deg);
+      }
+
+      .front,
+      .back {
+        position: absolute;
+        width: 350px;
+        /* 然后设置为背面朝向用户时不可见 */
+        backface-visibility: hidden;
+        /* 我觉得用linear顺滑一点 */
+        transition: 0.3s linear;
+
+        .title {
+          font-size: 30px;
+          line-height: 50px;
+          color: #fff;
+          font-weight: 800;
+        }
+
+        .input {
+          margin-bottom: 10px;
+        }
+
+        .button {
+          margin-bottom: 10px;
+        }
+
+        .tips {
+          font-size: 24px;
+          color: #727272;
+          cursor: pointer;
+
+          .row {
+            text-align: center;
+          }
+
+          .signText {
+            color: #f9ac49;
+          }
+        }
+      }
+    }
+
+    /* 将front旋转180度 */
+
+    .middle-flip .front {
+      transform: rotateY(180deg);
+    }
+
+    /* 将back旋转180度 */
+
+    .middle-flip .back {
+      transform: rotateY(0deg);
+    }
+  }
+
 }
 </style>

@@ -14,6 +14,7 @@
     <el-menu-item index="/example">Example</el-menu-item>
     <el-menu-item index="/other">Other</el-menu-item>
     <el-menu-item index="/car">Demo</el-menu-item>
+    <el-menu-item index="/demo1">Demo1</el-menu-item>
   </el-menu>
 </template>
 
