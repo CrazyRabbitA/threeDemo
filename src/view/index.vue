@@ -4,7 +4,7 @@
       <div :class="['logContent',{'middle-flip':!isFront}]">
         <div class="front">
           <div class="title">LOGIN</div>
-          <el-input class="input" clearable v-model="loginForm.account" placeholder="Please input account"/>
+          <el-input class="input" clearable v-model="loginForm.userName" placeholder="Please input account"/>
           <el-input class="input" clearable type="password" show-password v-model="loginForm.password"
                     placeholder="Please input password"/>
           <el-button class="button" type="primary" round @click="load('login')">LOGIN</el-button>
@@ -16,7 +16,7 @@
 
         <div class="back">
           <div class="title">REGISTER</div>
-          <el-input class="input" clearable v-model="registerForm.account" placeholder="Please input account"/>
+          <el-input class="input" clearable v-model="registerForm.userName" placeholder="Please input account"/>
           <el-input class="input" clearable type="password" show-password v-model="registerForm.password"
                     placeholder="Please input password"/>
           <el-input class="input" clearable type="password" show-password v-model="registerForm.confirmPassword"
@@ -35,6 +35,7 @@
 <script>
 import {ElMessage} from 'element-plus'
 import {getCurrentInstance} from "vue";
+import Api from '../api'
 
 
 export default {
@@ -45,11 +46,11 @@ export default {
     return {
       isFront: true,
       loginForm: {
-        account: '',
+        userName: '',
         password: ''
       },
       registerForm: {
-        account: '',
+        userName: '',
         password: '',
         confirmPassword: ''
       }
@@ -57,60 +58,101 @@ export default {
   },
   methods: {
     rotate() {
-      console.log('旋转');
       this.isFront = !this.isFront;
-      console.log(this.isFront);
     },
     load(type) {
-      this.$router.push('note');
-      // if (type === 'login') {
-      //   if (!this.loginForm.account) {
-      //     ElMessage({
-      //       message: 'Please input your account',
-      //       type: 'warning',
-      //     })
-      //     return false;
-      //   }
-      //   if (!this.loginForm.password) {
-      //     ElMessage({
-      //       message: 'Please input your password',
-      //       type: 'warning',
-      //     })
-      //     return false;
-      //   }
-      //
-      // } else {
-      //   if (!this.registerForm.account) {
-      //     ElMessage({
-      //       message: 'Please input your account',
-      //       type: 'warning',
-      //     })
-      //     return false;
-      //   }
-      //   if (!this.registerForm.password) {
-      //     ElMessage({
-      //       message: 'Please input your password',
-      //       type: 'warning',
-      //     })
-      //     return false;
-      //   }
-      //   if (!this.registerForm.confirmPassword) {
-      //     ElMessage({
-      //       message: 'Please input your password again',
-      //       type: 'warning',
-      //     })
-      //     return false;
-      //   }
-      //   if (this.registerForm.password !== this.registerForm.confirmPassword) {
-      //     ElMessage({
-      //       message: 'Please confirm your password,make sure they are in common',
-      //       type: 'warning',
-      //     })
-      //     return false;
-      //   }
-      //
-      // }
+      if (type === 'login') {
+        if (!this.loginForm.userName) {
+          ElMessage({
+            message: 'Please input your account',
+            type: 'warning',
+          })
+          return false;
+        }
+        if (!this.loginForm.password) {
+          ElMessage({
+            message: 'Please input your password',
+            type: 'warning',
+          })
+          return false;
+        }
+        const data = {
+          userName: this.loginForm.userName,
+          password: this.loginForm.password
+        }
+        Api.user.login(data)
+            .then(res => {
+              ElMessage({
+                message: '登录成功',
+                type: 'success',
+              })
+              localStorage.setItem('token', res.data.user.token);
+              setTimeout(() => {
+                this.$router.push('note');
+              }, 1000)
+            })
+            .catch(error => {
+              if (error.response.data) {
+                ElMessage({
+                  message: error.response.data.message,
+                  type: 'error',
+                })
+              }
+            })
 
+      } else {
+        if (!this.registerForm.userName) {
+          ElMessage({
+            message: 'Please input your account',
+            type: 'warning',
+          })
+          return false;
+        }
+        if (!this.registerForm.password) {
+          ElMessage({
+            message: 'Please input your password',
+            type: 'warning',
+          })
+          return false;
+        }
+        if (!this.registerForm.confirmPassword) {
+          ElMessage({
+            message: 'Please input your password again',
+            type: 'warning',
+          })
+          return false;
+        }
+        if (this.registerForm.password !== this.registerForm.confirmPassword) {
+          ElMessage({
+            message: 'Please confirm your password,make sure they are in common',
+            type: 'warning',
+          })
+          return false;
+        }
+        const data = {
+          userName: this.registerForm.userName,
+          password: this.registerForm.password
+        }
+        Api.user.registe(data)
+            .then(res => {
+              ElMessage({
+                message: '注册成功',
+                type: 'success',
+              })
+              localStorage.setItem('token', res.data.user.token);
+              setTimeout(() => {
+                this.$router.push('note');
+              }, 1000)
+            })
+            .catch(error => {
+              if (error.response.data) {
+                ElMessage({
+                  message: error.response.data.message,
+                  type: 'error',
+                })
+              }
+            })
+      }
     }
   }
 }

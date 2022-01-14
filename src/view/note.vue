@@ -2,14 +2,17 @@
   <div class="note">
     <div class="leftSection">
       <div class="avatar">
-        <img src="../assets/images/dog1.jpeg" alt="">
+        <img src="../assets/images/dog2.jpeg" alt="">
       </div>
-      <div class="account">Ye Xiao Feng</div>
+      <div class="account">{{ userName }}</div>
+
+      <el-button class="button" type="primary" round @click="logout()">退出登录</el-button>
+
 
     </div>
     <div class="rightSection">
-      <div v-for="(item,index) in noteList" class="noteItem">
-        <el-icon color="#e75757" :size="18" class="deleteIcon" @click="deleteItem(index)">
+      <div v-for="(item,index) in noteList" :key="item.noteId" class="noteItem">
+        <el-icon color="#e75757" :size="18" class="deleteIcon" @click="deleteItem(item.noteId)">
           <delete/>
         </el-icon>
         <el-icon color="#1e68ff" :size="18" class="editIcon" @click="editItem(item,index)">
@@ -35,6 +38,8 @@
     </div>
   </div>
   <!--  <div class="night"></div>-->
+  <div class="shooting_star"></div>
+  <div class="shooting_star"></div>
   <div class="shooting_star"></div>
   <div class="shooting_star"></div>
   <div class="shooting_star"></div>
@@ -96,6 +101,9 @@
 
 <script>
 import {AddLocation, Calendar, Collection, Delete, AlarmClock, Edit} from '@element-plus/icons-vue'
+import Api from '../api';
+import {getNoteList} from "../api/url/note";
+import {ElMessage} from "element-plus";
 
 
 export default {
@@ -110,6 +118,7 @@ export default {
   },
   data() {
     return {
+      userName: '',
       showAddDialog: false,
       noteForm: {
         title: '',
@@ -121,26 +130,92 @@ export default {
     }
   },
   methods: {
+    logout() {
+      localStorage.removeItem('token');
+      this.$router.go(-1);
+    },
     addItem() {
       this.operateType = 'add';
       this.showAddDialog = true;
     },
-    submit() {
-      this.noteList.push(this.noteForm);
-      console.log(this.noteForm);
-      this.showAddDialog = false;
-      this.noteForm = {
-        title: '',
-        time: '',
-        location: ''
+    finalSubmit() {
+      if (this.operateType === 'add') {
+        Api.note.addNote(this.noteForm)
+            .then(res => {
+              ElMessage({
+                message: '添加成功',
+                type: 'success',
+              })
+              this.noteForm = {
+                title: '',
+                time: '',
+                location: ''
+              }
+              this.getNoteList();
+            })
+            .catch(err => {
+              if (error.response.data) {
+                ElMessage({
+                  message: error.response.data.message,
+                  type: 'error',
+                })
+              }
+            })
+            .finally(() => {
+              this.showAddDialog = false;
+            })
+      }
+      if (this.operateType === 'edit') {
+        const data = {noteId: this.currentNoteId, ...this.noteForm}
+        Api.note.editNote(data)
+            .then(res => {
+              ElMessage({
+                message: '编辑成功',
+                type: 'success',
+              })
+              this.noteForm = {
+                title: '',
+                time: '',
+                location: ''
+              }
+              this.getNoteList();
+            })
+            .catch(err => {
+              if (error.response.data) {
+                ElMessage({
+                  message: error.response.data.message,
+                  type: 'error',
+                })
+              }
+            })
+            .finally(() => {
+              this.showAddDialog = false;
+            })
       }
     },
-    deleteItem(index) {
-      console.log(index);
-      this.noteList.splice(index, 1);
+    submit() {
+      this.finalSubmit();
+    },
+    deleteItem(noteId) {
+      Api.note.deleteNote({
+        noteId
+      })
+          .then(res => {
+            ElMessage({
+              message: '删除成功',
+              type: 'success',
+            })
+            this.getNoteList();
+          })
+          .catch(err => {
+
+          })
+
+
     },
     editItem(item, index) {
       this.operateType = 'edit';
+      this.currentNoteId = item.noteId;
       this.showAddDialog = true;
       const {title, time, location} = item;
       this.noteForm = {
@@ -148,7 +223,30 @@ export default {
       }
 
 
+    },
+    getUserInfo() {
+      Api.user.getUserInfo()
+          .then(res => {
+            this.userName = res.data.user.userName;
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    },
+    getNoteList() {
+      Api.note.getNoteList()
+          .then(res => {
+            this.noteList = res.data.noteList;
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
     }
+  },
+  mounted() {
+    this.getUserInfo();
+    this.getNoteList();
   }
 }
 </script>
@@ -202,6 +300,14 @@ export default {
     border-radius: 20px;
     border: solid 2px #232d77;
     padding: 20px;
+    overflow: hidden;
+
+    &:after {
+      content: '';
+      display: block;
+      visibility: hidden;
+      clear: both;
+    }
 
     .addNewItem,
     .noteItem {
