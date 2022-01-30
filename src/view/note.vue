@@ -5,10 +5,7 @@
         <img src="../assets/images/dog2.jpeg" alt="">
       </div>
       <div class="account">{{ userName }}</div>
-
       <el-button class="button" type="primary" round @click="logout()">退出登录</el-button>
-
-
     </div>
     <div class="rightSection">
       <div v-for="(item,index) in noteList" :key="item.noteId" class="noteItem">
