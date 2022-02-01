@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="content">
+      <div class="test">test</div>
       <div :class="['logContent',{'middle-flip':!isFront}]">
         <div class="front">
           <div class="title">LOGIN</div>
@@ -170,6 +171,14 @@ export default {
     bottom: 0;
     background: url('http://img.souche.com/f2e/2da0f1c87fb5b3dcc3560c4244dec230.jpeg') no-repeat;
     background-size: cover;
+
+    .test {
+      positon: fixed;
+      left: 0;
+      top: 0;
+      font-size: 16px;
+      color: red;
+    }
 
     .logContent {
       background: rgba(255, 255, 255, .2);
